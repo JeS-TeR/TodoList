@@ -102,6 +102,5 @@ const submit = async () =>{
     "username":username,
     "password":password,
     "password2":password});
-  console.log("POST CALL PLZ");
   postData(json);
 }

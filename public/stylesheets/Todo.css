@@ -16,7 +16,7 @@ body{
   padding-bottom:20px;
 }
 #I_Cont h1{
-  border:2px solid purple;
+  /* border:2px solid purple; */
   /* height:40px; */
   display:inline-block;
    margin:20px auto;
@@ -64,7 +64,7 @@ body{
   color:black;
   /* display: inline-block; */
   font-size:25px;
-  margin-top:20px;
+  margin-top:50px;
   /* padding: 5px; */
   transition: background-color 2s;
 
@@ -77,8 +77,6 @@ body{
   /* border:2px solid purple; */
   font-size:15px;
   margin-top:10px;
-  padding-top:10px;
-  padding-bottom:10px;
 }
 #newProfile{
   border:2px solid black;

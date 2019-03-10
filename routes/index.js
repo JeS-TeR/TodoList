@@ -35,6 +35,8 @@ router.post('/CreateLogin',function(req,res,next){
     credCollec.insertOne(req.body);
   })
 })
+
+router.get('/TodoMain')
 // router.post()
 router.get("/*",function(req,res,next){
   res.redirect("/");

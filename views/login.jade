@@ -11,13 +11,12 @@ block content
         div
           label Password:
           input(type = "password"  name="password" required)
+          div#CreateLogin
+            label Re-enter password:
+            input(type = "password"  name="password" required)
         div#submit(onclick = "Login()") Submit
-        div#CreateLogin
-          p --------------(: No Profile : No Worries :)--------------
-          label Re-enter password:
-          input(type = "password"  name="password" required)
-          div#newProfile(onclick = "submit()") Create Profile
+        p --------------(: No Profile : No Worries :)--------------
+        div#newProfile(onclick = "submit()") Create Profile
   script(src="javascripts/anime.min.js")
   script(src="javascripts/Todo.js")
   script(src="javascripts/TodoAnimations.js")
-  
