@@ -4,21 +4,23 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var validator = require('validator');
 
-
+//console.log(validator);
 //Database
-var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
+var url = "mongodb://localhost:27017/todoDB";
+mongoose.connect(url);
+var db = mongoose.connection;
 
-var url = "mongodb://localhost:27017/";
-database = new MongoClient(url);
-
+//models
+require ('./models/User');
+require ('./models/Task');
 //Routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-
-app.locals.database = database;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +32,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-console.log(app.get);
 
 /*
   If i dont use '/' then it wont work...idk why..

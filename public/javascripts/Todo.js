@@ -1,106 +1,93 @@
-//This is how u do xml request.... GET
-// function Ajax(){
-//   console.log("yoski broski");
-//   const xhr = new XMLHttpRequest();
-//   console.log(xhr.readyState);
-//   xhr.onreadystatechange = function(){
-//     console.log(xhr.readyState);
-//     if(xhr.readyState== 4){
-//       if(xhr.status === 200){
-//         console.log("guichi brah");
-//         console.log(xhr.responseText);
-//       }
-//       else if( xhr.status === 404){
-//         console.log("bruv idk what u waaaaant");
-//       }
-//       else if( xhr.status === 302){
-//         console.log("talk to me fam, we good?");
-//       }
-//     }
-//   }
-//   xhr.open("get",'./login.html',true);
-//   xhr.send();
-// }
+/* these fuunctions are concerned with validating the  input fields... they will be fire on keydown, and notify the user of what hes missing*/
 
-//Posts username and password if everything is guichi;
-let postData = function(loginData){
 
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST","/CreateLogin",true);
-  console.log("yo");
-  xhr.setRequestHeader("Content-type","application/json");
-  xhr.send(loginData);
+// All of these variables will trigger when thier respective input fields are clicked on.
+// The first two can have an object with messages(invalids). This way i can delete each message once thier resolved.
+// if messages are once, mouses out, check one more time to make sure everythings good.
+// Only show modal when box is focused; once they click off, the modal goes away, but the border(inset border) will be red.. to show that thier is an error(or i can just have an x)
+// delete messages when they're resolved... how?
+//modal can be an unordered list, and i delete the list elements, when theyre resolved.
+
+/* This section is concerned with doing validating the username,and providing real time update*/
+let userField = document.getElementsByName("username")[0];
+let messages = {"YOSKI":"BROSKI"};
+
+//fires validate function on keypress
+userField.addEventListener("keydown",validateU_name);
+
+function validateU_name(e){
+  if(!eval(this.getAttribute("beenclicked"))){
+    this.value =" ";
+    this.setAttribute("beenClicked",true);
+  }
+  if(validator.isEmpty(this.value)){
+    console.log("Faak u doing fam?");
+  }
+  if(Object.entries(messages).length === 0 && messages.constructor === Object){
+    return true;
+  };
 }
 
-//Checks if name already exists
-let checkUserName =  (username) => {
-  let exists = false;
+
+/** PassWord validation section **/
+function validatePass(self){
+  let messages = {};
+
+
+  if(Object.entries(messages).length === 0 && messages.constructor === Object){
+    return true;
+  };
+}
+// Darken the second field out if the other is not valid.
+function comparePass(self){
+  messages ={}
+  let origPass = document.getElementsByName('password')
+  if(origPass.value !== self.value)
+    message.different="The Passwords are not the same";
+  if(messages.entries(obj).length === 0 && messages.constructor === Object){
+      return true;
+  };
+}
+
+/**                            User Releate Requests              **/
+let createUser  = () => {
+  //Could have it that, if users data isn't valid, then they can't login. Can't click submit button.
+ JSON.stringify({username:username,password:password});
+  const xhr = new XMLHttpRequest();
+
+  try{
+    return new Promise((resolve,reject) =>{
+      xhr.open("POST","/createUser",true);
+      xhr.setRequestHeader("Content-type","application/json");
+      xhr.send();
+
+      xhr.onreadystatechange = () =>{
+        if(xhr.readyState === 4){
+        console.log(xhr.responseText);
+        }
+      }
+    })
+  }catch(err){throw err}
+}
+
+let deleteUser = () => {
+  // !!!!!!!!!!let userId = getUserId somehow!!!!!
   const xhr = new XMLHttpRequest();
   try{
-    // Promises are so fking ugly
-    return new Promise((resolve,reject)=>{
-      //Open ajax request
-      xhr.open("POST","/verify",true);
-      xhr.setRequestHeader("Content-type","application/json");
-      username = JSON.stringify({"username":username});
-      xhr.send(username);
-
-      //Onreadystate event must be in this scope...still looking into why
-      xhr.onreadystatechange = () => {
-            if(xhr.readyState === 4){
-              console.log(xhr.responseText);
-              if(eval(xhr.responseText)){
-                console.log("Unlucky, Seems it already exists");
-                exists = true;
-                return resolve(exists);
-              }
-              resolve(exists)
-          }
-       }
+    return new Promise((resolve,reject) => {
+      xhr.open();
+      xhr.setRequestHeader();
+      xhr.send(); // would be sending the id(or jwToken(jessie talked about), the server would then erform te delete action).
     })
-  }
-  catch(err){throw err}
+  }catch(err){throw err}
 }
 
-let validUsername = (username) => {
-
-}
-let validatePassword = (password) =>{
-
-}
-
-let checkEquality = (password1,password2) =>{
-  if(password1 == password2) return true;
-}
-
-let comparePassword=(original,repeated) => {
-  if(original == repeated){
-     return true;
-  }
-}
-
-const submit = async () =>{
-  var username = document.getElementsByName("username")[0].value;
-  var password = document.getElementsByName("password")[0].value;
-  var password2 = document.getElementsByName("password")[1].value;
 
 
 
-  let exists = await checkUserName(username);
-
-  if(!checkEquality(password,password2)){
-    console.log("Passwords dont match");
-  }
-  if(exists){
-    console.log("Name Taken");
-    return;
-  }
-
-  //WE IN THE CLEAR BABY.... TIME TO MAKE THIS ACCOUNT... OH PASSWORDS;
-
-  json = JSON.stringify({
-    "username":username,
-    "password":password,
-    "password2":password});
-  postData(json);
-}
+// json = JSON.stringify({
+//   "username":username,
+//   "password":password,
+//   "password2":password});
+//
+// postData(json);

@@ -1,44 +1,46 @@
-var express = require('express');
-var router = express.Router();
-/* GET home page. */
-console.log(database);
-router.get('/', function(req, res, next) {
-  res.render('login',{title:"Get To It"});
+const express  = require('express');
+const router   = express.Router();
+const mongoose = require("mongoose");
+
+//Each route would require its corresponding DAO and Model.
+
+//Require UserDao
+//One liner? Not a bad idea lool
+let UserDao = new require ('../DAO/User').UserDao;
+userDao =  new UserDao();
+let TaskDao = new require ('../DAO/Task').TaskDao;
+taskDao = new TaskDao();
+
+//Initialize Services
+UserService = require('../Services/UserService').UserService;
+userService = new UserService(userDao);
+
+/*          GET Page.                                                 */
+router.get('/', (req, res, next) => {
+  res.render('TodoList',{title:"Get To It"});
 });
 
-router.post('/verify', function(req,res,next){
-  database.connect(function(err){
-    //console.log(err);
-    let db  = database.db("TodoDB");
-    credCollec = db.collection("credentials");
-    console.log(req.body);
-    credCollec.findOne({"username":req.body.username}, (err,result) => {
-      console.log(result);
-      if(result === null){
-        res.StatusCode=204;
 
-        res.send(false);
-      }
-      else{
-        res.StatusCode=204;
 
-      res.send(true);
-      }
-    });
-  })
-})
+/*          Routings Concerned with User                               */
 
-router.post('/CreateLogin',function(req,res,next){
-  database.connect(function(err){
-    let db = database.db("TodoDB");
-    credCollec = db.collection("credentials");
-    credCollec.insertOne(req.body);
-  })
-})
+//Gets username. Mainly to check if username already exits
+router.post('/createUser', async function(req,res,next){
+  let {username,password} = req.body;
+  let exists_msg = await userService.newUser({username,password});
+  if(exists_msg[0]){
+    res.send(exists_msg[1])
+    return;
+  }
+  res.send(JSON.stringify(exists_msg[1]));
+});
 
-router.get('/TodoMain')
-// router.post()
+
+/*          Routing for task and task lists                            */
+router.get('/TodoMain');
+
 router.get("/*",function(req,res,next){
   res.redirect("/");
-})
+});
+
 module.exports = router;
