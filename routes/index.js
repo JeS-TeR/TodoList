@@ -35,11 +35,19 @@ router.post('/createUser', async function(req,res,next){
   res.send(JSON.stringify(exists_msg[1]));
 });
 
+router.get("/getUser/:_id", async function(req,res,next){
+  let {_id} = req.params;
+  console.log(_id);
+  let user = await userService.getUserbyId({_id});
+  console.log("index:" +user)
+  res.send(user);
+})
 
 /*          Routing for task and task lists                            */
 router.get('/TodoMain');
 
 router.get("/*",function(req,res,next){
+  res.send("The redirct be firing fam");
   res.redirect("/");
 });
 

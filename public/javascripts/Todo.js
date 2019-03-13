@@ -10,22 +10,30 @@
 
 /* This section is concerned with doing validating the username,and providing real time update*/
 let userField = document.getElementsByName("username")[0];
-let messages = {"YOSKI":"BROSKI"};
+let messages = {};
 
 //fires validate function on keypress
-userField.addEventListener("keydown",validateU_name);
+userField.addEventListener("keyup",validateU_name);
 
 function validateU_name(e){
-  if(!eval(this.getAttribute("beenclicked"))){
-    this.value =" ";
-    this.setAttribute("beenClicked",true);
+
+  messages.empty    = validator.isEmpty(this.value)   ? "Can't be empty" : false;
+  messages.alpha    = validator.isAlpha(this.value)   ? "Must contain at least 1 number" : false;
+  messages.numeric  = validator.isNumeric(this.value) ? "Must contain letters" : false
+  messages.tooShort = validator.isLength(this.value  ,[{min:6}]) ? "must be more than 5 characters" : false;
+  messages.tooLong  = validator.isLength(this.value  ,[{max:12}]) ? "must be less than 12 characters" : false;
+
+  console.log(messages.tooShort);
+  console.log(messages.tooLong);
+
+  if( !messages.empty && !messages.alpha && !messages.numeric){
+    console.log("empty: "   + messages.empty);
+    console.log("alpha: "   + messages.alpha);
+    console.log("numeric: " + messages.numeric);
   }
-  if(validator.isEmpty(this.value)){
-    console.log("Faak u doing fam?");
+  else{
+    console.log("EEEEEEERRRRRRR");
   }
-  if(Object.entries(messages).length === 0 && messages.constructor === Object){
-    return true;
-  };
 }
 
 

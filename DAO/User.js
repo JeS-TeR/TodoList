@@ -15,19 +15,28 @@ class UserDao{
   If everything is good, then the service will call the DOA(it takes it as an argument, so itll have a reference)
   The DOA will then interact with the database.
   **/
+  async getUserbyId(_id){
+
+    let user = await User.findById({_id:_id},"username password",(err,result)=>{
+      return result;
+    });
+    console.log("DAO: "+user)
+    return user;
+  }
   async getUser(username){
-    console.log("get users " + username);
-    let user = await User.findOne({username:username});
+    let user = await User.findOne({username:username},"username password",(err,result)=>{
+      return result;
+    });
     return user;
   }
 
   async createUser(username,password){
-    let newUser = User({username,password});
+    let newUser = User(username,password);
     await newUser.save();
     return newUser;
   }
 
-  async deleteUser(){
+  async deleteUser(user_id){
 
   }
 
