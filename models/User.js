@@ -8,8 +8,9 @@ let Schema = mongoose.Schema;
 */
 
 let userSchema = new Schema({
-  username : {type: String, required: true},
-  password : {type: String, required:true,unique: true}
+  username : {type: String, required: true, unique : true},
+  password : {type: String, required:true,},
+  taskList : [{type: mongoose.Schema.Types.ObjectId, ref : "TaskList"}]
 });
 
 const User = mongoose.model('User',userSchema);

@@ -5,10 +5,21 @@ class TaskDao {
 
   // to create a task i must have access to the the variables that the task schema/model takes, I would
   // get these from the service, and the service would get these through the request(or somewhere between the request and the service;
-  async createTask({taskName,dueDate,tags}){
-    let newTask = Task({taskName,content,dueDate,tags});
+  async createTask(taskName,content,dueDate,tags){
+    let newTask = Task({"taskName":taskName,"content":content,"dueDate":dueDate,"tags":tags});
     newTask.save();
     return newTask;
+  }
+
+  async getTaskById(taskId){
+    console.log("We in the dao:" + taskId);
+    let task = Task.findById({_id:taskId},(err,result) => {
+      if(err)
+        return false;
+      return result;
+    });
+    
+    return task;
   }
 
   async update({taskId,content,dueDate,tags}){
@@ -20,10 +31,13 @@ class TaskDao {
 
   //How would i update the tags? would If a tag is deleted or added?
   //Use the
-  async deleteTask(taskId){
-    return Task.findOneAndDelete(taskId);
+  async deleteTask(_id){
+    console.log("we in the taskDao" +_id);
+    let deletedTask = Task.findOneAndDelete({"_id":_id},(err,task) => {
+      return task;
+    });
+    return deletedTask;
   }
-
 
 }
 

@@ -13,9 +13,10 @@ var url = "mongodb://localhost:27017/todoDB";
 mongoose.connect(url);
 var db = mongoose.connection;
 
-//models
+//models !Reserach what this does!
 require ('./models/User');
 require ('./models/Task');
+require ('./models/TaskList');
 //Routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
