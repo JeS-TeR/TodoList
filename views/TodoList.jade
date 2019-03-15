@@ -7,16 +7,25 @@ block content
       form#Log_In_Form
         div
           label Username:
-          input(type = "text" value=""  autocomplete = "off" beenclicked = "false" name = "username")
+          div
+            img.check(src="images/x.png")
+            input(type = "text" value=""  autocomplete = "off" beenclicked = "false" name = "username")
         div
           label Password:
-          input(type = "password"  name="password" required)
+          div
+            img.check(src="images/x.png")
+            input(type = "password"  name="password" required)
           div#CreateLogin
             label Re-enter password:
-            input(type = "password"  name="password"  required)
-        div#submit(onclick = "createUser()") Submit
-        p ------(: No Profile : No Worries :)------
-        div#newProfile(onclick = "submit(this)" state =2) Create
+            div
+              img.check(src="images/x.png")
+              input(type = "password"  name="password"  required)
+        div#submit(onclick = "Submit(this)" state = "0") Submit
+        p#createPara ------(: No Profile : No Worries :)------
+        div#newProfile(onclick = "createUser(this)" state ="false") Create
+        
+    div#taskListContainer
+       
   script(src="javascripts/anime.min.js")
   script(src="javascripts/validator.js")
   script(src="javascripts/TodoAnimations.js")

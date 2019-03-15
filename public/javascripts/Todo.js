@@ -1,4 +1,9 @@
-/* these fuunctions are concerned with validating the  input fields... they will be fire on keydown, and notify the user of what hes missing*/
+//Globals
+var userId    = "";
+var userLogin = "";
+
+
+
 
 
 // All of these variables will trigger when thier respective input fields are clicked on.
@@ -9,43 +14,47 @@
 //modal can be an unordered list, and i delete the list elements, when theyre resolved.
 
 /* This section is concerned with doing validating the username,and providing real time update*/
+
 let userField = document.getElementsByName("username")[0];
+let passwordField  = document.getElementsByName("password")[0];
 let messages = {};
 
 //fires validate function on keypress
-userField.addEventListener("keyup",validateU_name);
+
+//img that accompanies validation field
+let userimg = document.getElementsByClassName("check");
+
 
 function validateU_name(e){
-
+  if(userimg[0].src != "images/loading.gif")
+    userimg[0].src = "images/loading.gif"
   messages.empty    = validator.isEmpty(this.value)   ? "Can't be empty" : false;
   messages.alpha    = validator.isAlpha(this.value)   ? "Must contain at least 1 number" : false;
-  messages.numeric  = validator.isNumeric(this.value) ? "Must contain letters" : false
-  messages.tooShort = validator.isLength(this.value  ,[{min:6}]) ? "must be more than 5 characters" : false;
-  messages.tooLong  = validator.isLength(this.value  ,[{max:12}]) ? "must be less than 12 characters" : false;
+  messages.numeric  = validator.isNumeric(this.value) ? "Must contain letters" : false;
 
-  console.log(messages.tooShort);
-  console.log(messages.tooLong);
-
-  if( !messages.empty && !messages.alpha && !messages.numeric){
+  if( !messages.empty && !messages.alpha && !messages.numeric){ 
+    userimg[0].src = "images/check.jpg";
+   
+  }
+  else{
+    userimg[0].src = "images/x.png";
     console.log("empty: "   + messages.empty);
     console.log("alpha: "   + messages.alpha);
     console.log("numeric: " + messages.numeric);
   }
-  else{
-    console.log("EEEEEEERRRRRRR");
-  }
 }
+
 
 
 /** PassWord validation section **/
 function validatePass(self){
   let messages = {};
 
-
   if(Object.entries(messages).length === 0 && messages.constructor === Object){
     return true;
   };
 }
+
 // Darken the second field out if the other is not valid.
 function comparePass(self){
   messages ={}
@@ -57,10 +66,78 @@ function comparePass(self){
   };
 }
 
-/**                            User Releate Requests              **/
-let createUser  = () => {
+/*                                                   User Releate functiono                               */
+/*                                                   User Releate functions                               */
+/*                                                   User Releate functions                               */
+/*                                                   User Releate functions                               */
+
+let Submit = async (self) => {
+  let username = userField.value;
+  let password = passwordField.value;
+  let credentials = JSON.stringify({username:username,password:password});
+
+  const xhr = new XMLHttpRequest();
+
+    try {
+      return new Promise((resolve,reject) =>{
+      xhr.open("Post","/Login",true);
+      xhr.setRequestHeader("Content-Type","application/json");
+      xhr.send(credentials);
+
+      xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4){
+           let resParams = JSON.parse(xhr.responseText);
+           if(resParams.isValid)
+            LogEmIn(resParams);
+           else{
+            let {msg} = resParams;
+            denyAccess(msg);
+           }
+        }
+      }
+    })
+  }catch(err){throw err}
+}
+
+let LogEmIn = async (resParams) => {
+  let loginForm = document.getElementById('Log_In_Form');
+  let O_Cont    = document.getElementById("O_Cont");
+  let TLD = document.getElementById("taskListContainer");
+
+  loginForm.style.display = "none";
+  let {user} = resParams;
+  userId    = user._id;
+  userLogin = user.username;
+  let taskList = await getTaskList(O_Cont,TLD,userId);
+
+  LoadTaskLists(taskList);
+}
+
+let denyAccess = (msg) => {
+  console.log(msg);
+}
+
+let createUser  = (self) => {
   //Could have it that, if users data isn't valid, then they can't login. Can't click submit button.
- JSON.stringify({username:username,password:password});
+
+  //will definately refactor to just toggle css classes.
+  let visible        = self.getAttribute("state");
+  let createLogin    = document.getElementById("CreateLogin");
+  let submit         = document.getElementById("submit");
+  let createPara     = document.getElementById("createPara");
+
+  userField.addEventListener("keyup",validateU_name);
+
+  if(!eval(visible)){
+    userimg[0].style.visibility = "visible";
+    createLogin.style.display ="block";
+    submit.style.display = "none";
+    createPara.style.display = "none";
+    self.state = "true";
+    return;
+  }
+
+  JSON.stringify({username:username,password:password});
   const xhr = new XMLHttpRequest();
 
   try{
@@ -91,11 +168,41 @@ let deleteUser = () => {
 }
 
 
+/*                                                   TaskList Releated functions                             */
+/*                                                   TaskList Releated functions                               */
+/*                                                   TaskList Releated functions                               */
+/*                                                   TaskList Releated functions                               */
 
 
-// json = JSON.stringify({
-//   "username":username,
-//   "password":password,
-//   "password2":password});
-//
-// postData(json);
+
+let getTaskList = async  (O_Cont,TLD,userId) => {
+  //call to animation function! add in future
+  let I_Cont   = document.getElementById("I_Cont");
+  
+
+  O_Cont.style.width="40%";
+  I_Cont.style.display  = "none";
+  TLD.style.display = "block";
+  TLD.style.minHeight  = "700px";
+
+  const xhr = new XMLHttpRequest();
+  try{
+    return new Promise((resolve,reject) =>{
+      xhr.open("GET","/getUser/"+userId,true);
+      xhr.setRequestHeader("Content-type","application/json");
+      xhr.send();
+
+      xhr.onreadystatechange = () =>{
+        if(xhr.readyState === 4){
+          console.log(xhr.responseText);
+          let {taskList} = JSON.parse(xhr.responseText);
+          return taskList;
+        }
+      }
+    })
+  }catch(err){throw err}
+}
+
+let LoadTaskLists =  (O_Cont,taskList) =>{
+  
+}

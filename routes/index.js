@@ -2,8 +2,9 @@ const express  = require('express');
 const router   = express.Router();
 const mongoose = require("mongoose");
 
-//Each route would require its corresponding DAO and Model.
-
+//TODO: Put different routes in different files(How Though!?!? All of them link to the same route :/... )
+//Each  Route would require its corresponding DAO and Model.
+  
 // Initialize Task Data Access Object
 let UserDao = new require ('../DAO/User').UserDao;
 let TaskDao = new require ('../DAO/Task').TaskDao;
@@ -25,17 +26,18 @@ router.get('/', (req, res, next) => {
   res.render('TodoList',{title:"Get To It"});
 });
 
-/*          Routings for User                               */
+/*          Routings for User                                         */
 
 //Create User, Checks if username already exists
 router.post('/createUser', async function(req,res,next){
   let {username,password} = req.body;
-  let exists_msg = await userService.newUser({username,password});
-  if(exists_msg[0]){
-    res.send(exists_msg[1]);
+  let resParams = await userService.newUser({username,password});
+  if(resParams.exists){
+    let {exists,msg} =resParams;
+    res.send({exists,msg});
     return;
   }
-  res.send(JSON.stringify(exists_msg[1]));
+  res.send(resParams);
 });
 
 router.get('/getUser/:_id', async function(req,res,next){
@@ -52,14 +54,16 @@ router.get('/getUser/:_id', async function(req,res,next){
 
 router.post('/Login', async (req,res,next)=>{
   let {username,password} = req.body;
-  let LoginStatus = await userService.login({username,password});
-  let message = "ENTER MY DEAD FRIEND EEEEENNNTEEEERRRR!!!!!!!";
-  if(LoginStatus === undefined)
-    message = "You my friend do not exist";
-  else if(LoginStatus === false)
-    message = "Invalid Credentials. Sure u got an account with us fam?";
+  let LoginStatus  = await userService.login({username,password});
+  let entryStatus  = {isValid:true,msg:"Welcome! GET TO IT!!!!!!!"};
 
-  res.send(message);
+  if(LoginStatus  === null)
+      entryStatus  = {isValid:false,msg:"You Dont Exists....unless you join the goGETTERS!!!!!"};
+  else if(LoginStatus == false)
+      entryStatus  = {isValid:false,msg:"Invalid Credentials. Sure u got an account with us fam?"};
+
+  entryStatus.user = LoginStatus;
+  res.send(entryStatus);
 });
 
 router.delete('/delUser/:_id', async (req,res,next)=>{
@@ -129,20 +133,6 @@ router.get("/getTL/:_id", async (req,res,next) => {
   }
   res.send(taskList);
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

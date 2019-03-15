@@ -15,8 +15,14 @@ body{
   margin: 40px auto;
   padding-bottom:20px;
 }
+
+#O_Cont #taskListContainer{
+  border:2px solid purple;
+  display:none;
+  width:100%;
+}
+
 #I_Cont h1{
-  /* border:2px solid purple; */
   /* height:40px; */
   display:inline-block;
    margin:20px auto;
@@ -25,6 +31,7 @@ body{
 #I_Cont{
   /* background-color: #ff0080; */
   /* border:2px solid red; */
+  border:2px solid rgb(19, 218, 201);
   height:90%;
   margin:20px auto;
   padding-top: 10px;
@@ -40,19 +47,38 @@ body{
   margin:40px auto;
   padding: 30px 10px 20px 10px;
   text-align: center;
+  vertical-align: middle;
   /* border:2px solid purple; */
 }
+
+
 #Log_In_Form label{
   /* border:2px solid black; */
   font-weight: bold;
   text-align: left !important;
 }
+#Log_In_Form div div img{
+  /* border:2px solid red; */
+  visibility: hidden;
+  width:30px;
+  /* margin-top:20px; */
+}
+#Log_In_Form div div div img{
+  vertical-align: top;
+  display: hidden;
+  margin-top:20px; 
+  height:30px;
+
+}
 #Log_In_Form input{
-  display:block;
+  /* border:2px solid red; */
+  display:inline-block;
   font-size: 20px;
   height:40px;
-  width:85%;
-  margin:10px auto;
+  width:80%;
+  margin:20px auto;
+  margin-left:20px;
+  vertical-align: middle;
 
 }
 #CreateLogin{
@@ -62,6 +88,7 @@ body{
   border:2px solid black;
   /* background-color:red; */
   color:black;
+  cursor:pointer;
   /* display: inline-block; */
   font-size:25px;
   margin:20px auto;
@@ -81,6 +108,7 @@ body{
 }
 #newProfile{
   border:2px solid black;
+  cursor:pointer;
   font-size: 25px;
   margin:20px auto;
   width:25%;

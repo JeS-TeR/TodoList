@@ -1,3 +1,5 @@
+//!TODO: ADD DOCS!
+
 class UserService {
 
   constructor(userDao){
@@ -18,23 +20,27 @@ async getUserbyId({_id}){
 async login({username,password}){
   let user = await this.userDao.getUser(username);
   console.log("login" + user);
-  if(!user)
-    return undefined;
+  if(user === null)
+    return null;
   
-  else if(user.password !== password);
+  else if(user.password !== password)
     return false;
-  
-  return true;
+
+    
+  // let {_id,username} =  user;
+  // let userCred = {_id,username};
+  // console.log("what: "+userCred);
+  return user;
 }
 async newUser({username,password}){
-    let user = await this.userDao.getUser(username);
-    if(user){
-      console.log("user exists");
-      return [true,"User Already Exists"];
-    }
+    let resParams = {};
+    let user      = await this.userDao.getUser(username);
+    if(user)
+      return resParams = {exists:true,msg:"User Already Exists"};
+    
     let newuser = await this.userDao.createUser(username,password);
     console.log(newuser);
-    return [false,newuser];
+    return resParams = {exists:false,msg:"Welcome To The Go-Getting TrendSetters",user:newuser};
 }
 
 async deleteUser({_id}){

@@ -17,7 +17,7 @@ class UserDao{
   **/
   async getUserbyId(_id){
     console.log("userDAO"+_id);
-    let user = await User.findById({_id:_id},"username password",(err,result)=>{
+    let user = await User.findById({_id:_id},(err,result)=>{
       if(err)
        return false;
     });
@@ -27,6 +27,7 @@ class UserDao{
     let user = User.findOne({username:username},"username password",(err,result)=>{
       if(err)
         return false;
+      console.log(result);
       return result;
     });
     return user;
