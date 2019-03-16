@@ -168,7 +168,7 @@ let deleteUser = () => {
 }
 
 
-/*                                                   TaskList Releated functions                             */
+/*                                                   TaskList Releated functions                               */
 /*                                                   TaskList Releated functions                               */
 /*                                                   TaskList Releated functions                               */
 /*                                                   TaskList Releated functions                               */
@@ -203,6 +203,17 @@ let getTaskList = async  (O_Cont,TLD,userId) => {
   }catch(err){throw err}
 }
 
-let LoadTaskLists =  (O_Cont,taskList) =>{
+let LoadTaskLists =  (TLD) =>{
   
 }
+
+/**                                                    Task Related Functions                                   */
+/**                                                    Task Related Functions                                   */
+/**                                                    Task Related Functions                                   */
+/**                                                    Task Related Functions                                   */
+
+let getTasks = async() => {
+  let xhr = new XMLHttpRequest();
+
+}
+

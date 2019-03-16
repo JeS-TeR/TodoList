@@ -61,8 +61,8 @@ async addCollection(userId,taskList){
 
 // Helper functions
     async getUser({username}){
-      return user;
       let user = await this.userDao.getUser(username);
+      return user;
     }
 }
 

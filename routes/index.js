@@ -18,7 +18,7 @@ let UserService     = require('../Services/UserService').UserService;
 let TaskService     = require('../Services/TaskService').TaskService;
 let TaskListService = require('../Services/TaskListService').TaskListService;
 let userService     = new UserService(userDao);
-let taskListService = new TaskListService(taskListDao,userService);
+let taskListService = new TaskListService(taskListDao,userService,taskDao);
 let taskService     = new TaskService(taskDao,taskListService);
 
 /*           GET Page.                                                 */
@@ -84,7 +84,12 @@ router.delete('/delUser/:_id', async (req,res,next)=>{
 /*          Routing for tasks                            */
 router.post("/createTask", async (req,res,next) => {
   let {taskName,content,dueDate,tags,TL_id} = req.body;
+  console.log({taskName},{TL_id})
   let newTask = await taskService.createTask({taskName,content,dueDate,tags,TL_id});
+  if(!newTask){
+    res.send("task Doesnt Exist");
+    return;
+  }
   console.log(newTask);
   res.send(newTask);
 });
@@ -124,6 +129,7 @@ router.post("/createTL", async (req,res) =>{
   console.log("we in the index" + taskList);
   res.send(taskList);
 })
+
 router.get("/getTL/:_id", async (req,res,next) => {
   let {_id} = req.params;
   let taskList = await taskListService.getTaskList({_id});
@@ -134,8 +140,18 @@ router.get("/getTL/:_id", async (req,res,next) => {
   res.send(taskList);
 })
 
+router.delete("/delTL/:_id", async ( req,res,next)=>{
+  let {_id} = req.params;
+  console.log("deltask router:"+{_id});
+  console.log(_id);
+  let deleted = await taskListService.delTaskList({_id});
+  if(!deleted){
+    res.send("Bad Request"); 
+  }
 
+  res.send("TaskList deleted.... Hope u completed everything");
 
+})
 
 
 
@@ -146,9 +162,9 @@ router.get("/getTL/:_id", async (req,res,next) => {
 
 
 /*redirects all faulty requests to login screen*/
-router.get("/*",function(req,res,next){
-  res.send("The redirct be firing fam");
-  res.redirect("/");
-});
+// router.get("/*",function(req,res,next){
+//   res.send("The redirct be firing fam");
+//   res.redirect("/");
+// });
 
 module.exports = router;

@@ -1,35 +1,41 @@
+const TaskService = require("./TaskService").TaskService;
+
 //!TODO: ADD DOCS!
-class TaskListService{
-    constructor(taskListDao,userService){
+class TaskListService extends TaskService {
+    constructor(taskListDao,userService,taskDao){
+      super(taskDao);
       this.taskListDao = taskListDao;
       this.userService = userService;
+
     }
 
     async createTaskList(tlName,userId){
-      console.log("bruvs jumping hoops");
-      console.log(userId)
+      
       let taskList = await this.taskListDao.createTL(tlName,userId);
-      console.log("ctl: "+taskList);
-      if(!taskList){
-        console.log("not created");
+      if(!taskList)
         return false;
-      }
       let user = await this.userService.addCollection(userId,taskList);
-      console.log("CTLS" + user);
       return taskList;
     }
 
     async getTaskList({_id}){
-      console.log(_id);
       let taskList = await this.taskListDao.getTaskListById(_id);
       return taskList;
     }
     async delTaskList({_id}){
-      let taskList = this.getTaskList({_id});
+      let taskList = await this.getTaskList({_id});
+      
       if(!taskList)
         return false;
-      let deletedTaskList = this.taskListDao.deleteTL(_id);
-      return deletedTaskList;
+
+      let deletedTasks = await this.taskListDao.deleteTL(_id);
+      console.log("length: "+deletedTasks.length);
+      for(let i = 0; i < deletedTasks.length; i++){
+        let _id = deletedTasks[i]._id;
+        console.log("we in for:" + _id);
+        await this.taskDao.deleteTask(_id);
+      }
+      return true;
     }
     async getTasks({_id}){
       let taskList = await this.getTaskList({_id});

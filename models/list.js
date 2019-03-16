@@ -6,7 +6,7 @@ let Schema =  mongoose.Schema;
 // schema constructor takes a list multiple objects as arg.
 let listSchema =  new Schema({
   ListName    : {title : String,required : true},
-  ref         : {type:Schema.Types.User, required:true}
+  ref         : {type  : Schema.Types.User, required:true}
 },{timestamps :true});
 
 

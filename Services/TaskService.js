@@ -7,28 +7,32 @@ class TaskService {
   }
 
   async createTask({taskName,content,dueDate,tags,TL_id}){
-    console.log(this.taskDao);
-    let newTask = await this.taskDao.createTask(taskName,content,dueDate,tags);
-    if(!newTask)
-      console.log("Task Not created");
-    console.log("WE in task services");
-    console.log(this.TLservice);
-    let added = await this.TLservice.addTask(TL_id,newTask);
-    if(!added)
-      this.taskDao.deleteTask(newTask._id);
+    let _id = TL_id;
+
+    let TL = await this.TLservice.getTaskList({_id});
+    if(!TL)
+      return;
+    let newTask = await this.taskDao.createTask(taskName,content,dueDate,TL_id,tags);
+
+    await this.TLservice.addTask(TL_id,newTask);
+    
     return newTask;
   }
 
   async getTaskById({_id}){
     let task =  await this.taskDao.getTaskById(_id);
+    console.log("this the taskService:"+task);
     return task;
   }
 
-  async deleteTask({_id}){
+  async deleteTask(_id){
+    console.log("IN deleted task TaskServ:" +_id);
+    console.log(this.taskDao);
     let task = await this.taskDao.getTaskById(_id);
+    console.log("Firing from extended");
     if(!task)
       return false;
-    let deletedTask = await this.taskDao.deleteTask(_id);
+    let deletedTask = await this.taskDao.deleteTask({_id});
     return deletedTask;
   }
 }
