@@ -3,7 +3,25 @@ block content
   link(rel="stylesheet",href='stylesheets/TodoList.css')
   div#O_Cont
     div#I_Cont
-      h1 #{title}
+      h1#title #{title}
+      div.TLwrapper
+        div.TLcontainer
+          aside.colorBlock
+          div.TLtemplate
+            header.TLhead
+              div.del del
+              h1.taskName TaskName
+            footer.TLfooter
+              li
+                nextdue overdue: 
+                span.due 10
+              li.upcomingTasks 
+                span upcoming:
+                span.upcoming 5
+              li 
+                span taskCount:
+                span.taskCount 20        
+      div#TasksContainer
       form#Log_In_Form
         div
           label Username:

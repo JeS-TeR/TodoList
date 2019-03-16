@@ -21,7 +21,67 @@ body{
   display:none;
   width:100%;
 }
-
+.TLcontainer{
+  background-color:#0CE9FF;
+  box-shadow: 5px 5px 5px;
+  height:100%;
+  margin-top:20px;
+  width:100%;
+}
+.colorBlock{
+  background-color:#9B0CFF;
+  display:inline-block;
+  height:140px;
+  vertical-align: top;
+  width:5%;
+}
+.TLwrapper{
+  position:relative;
+}
+.TLtemplate{
+  /* border:2px solid purple; */
+  display:inline-block;
+  height: 140px;
+  position:relative;
+  vertical-align: top;
+  width:95%;
+}
+.TLhead{
+}
+.TLhead{
+  padding-top:25px;
+}
+.del{
+  position:absolute;
+  top:10px;
+  right:10px;
+}
+.TLfooter{
+  bottom:0px;
+  display:inline-block;
+  left:0px;
+  list-style-type: none;
+  position:absolute;
+  width:100%;
+}
+.TLfooter li{
+  display:inline-block;
+  font-size:20px;
+  margin-left:10px;
+  padding-left:5px;
+  padding-right:10px;
+  width:30%;
+}
+.TLfooter li:first-child{
+  float:left;
+  margin-left:0px;
+}
+.TLfooter li:last-child{
+  float:right;
+}
+.TLfooter .upcomingTasks{
+  color:red;
+}
 #I_Cont h1{
   /* height:40px; */
   display:inline-block;

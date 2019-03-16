@@ -87,10 +87,10 @@ let Submit = async (self) => {
       xhr.onreadystatechange = () => {
         if(xhr.readyState === 4){
            let resParams = JSON.parse(xhr.responseText);
+           let {msg} = resParams;
            if(resParams.isValid)
             LogEmIn(resParams);
            else{
-            let {msg} = resParams;
             denyAccess(msg);
            }
         }
@@ -100,17 +100,20 @@ let Submit = async (self) => {
 }
 
 let LogEmIn = async (resParams) => {
-  let loginForm = document.getElementById('Log_In_Form');
-  let O_Cont    = document.getElementById("O_Cont");
-  let TLD = document.getElementById("taskListContainer");
+  //Refactor all recurring css styling to a stylesheet; and just toggle between classes; -_- this is too tedius
+  let loginForm  = document.getElementById('Log_In_Form');
+  let O_Cont     = document.getElementById('O_Cont');
+  let loginTitle = document.getElementById("title");
+  let {user}     = resParams;
 
+  loginTitle.style.display = "none";
   loginForm.style.display = "none";
-  let {user} = resParams;
+  O_Cont.style.border = "none";
+  //!!!!!!!!!!!!! These are global... not good... need to refactor !!!!!!!!!!!!!!!!!!!!!
   userId    = user._id;
   userLogin = user.username;
-  let taskList = await getTaskList(O_Cont,TLD,userId);
 
-  LoadTaskLists(taskList);
+  LoadTaskLists(resParams.user.taskList);
 }
 
 let denyAccess = (msg) => {
@@ -175,36 +178,13 @@ let deleteUser = () => {
 
 
 
-let getTaskList = async  (O_Cont,TLD,userId) => {
-  //call to animation function! add in future
-  let I_Cont   = document.getElementById("I_Cont");
+
+
+let LoadTaskLists =  (resParams) =>{
   
-
-  O_Cont.style.width="40%";
-  I_Cont.style.display  = "none";
-  TLD.style.display = "block";
-  TLD.style.minHeight  = "700px";
-
-  const xhr = new XMLHttpRequest();
-  try{
-    return new Promise((resolve,reject) =>{
-      xhr.open("GET","/getUser/"+userId,true);
-      xhr.setRequestHeader("Content-type","application/json");
-      xhr.send();
-
-      xhr.onreadystatechange = () =>{
-        if(xhr.readyState === 4){
-          console.log(xhr.responseText);
-          let {taskList} = JSON.parse(xhr.responseText);
-          return taskList;
-        }
-      }
-    })
-  }catch(err){throw err}
-}
-
-let LoadTaskLists =  (TLD) =>{
-  
+  resParams.forEach(element => {
+    
+  });   
 }
 
 /**                                                    Task Related Functions                                   */
