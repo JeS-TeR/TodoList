@@ -1,17 +1,21 @@
-//Globals
-var userId    = "";
-var userLogin = "";
+/*
+  !!!!!NOTICE!!!!!!
+  I know this would be easier by creating classes for the user,the tasklist and the tasks, 
+  BUT,
+  I wanted use the functional programming stye on the front-end, and the object oriented programming style on the back end so bare with me,
+  I hope u enjoy either learning from, using or helping with this project... ITs gonna be the best  todolist on the internet one DAY O_O...
+*/
 
 
 
 
+//Globals ------BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD
+var userId     = "";
+var userLogin  = "";
+var Tasks   = [];
 
-// All of these variables will trigger when thier respective input fields are clicked on.
-// The first two can have an object with messages(invalids). This way i can delete each message once thier resolved.
-// if messages are once, mouses out, check one more time to make sure everythings good.
-// Only show modal when box is focused; once they click off, the modal goes away, but the border(inset border) will be red.. to show that thier is an error(or i can just have an x)
-// delete messages when they're resolved... how?
-//modal can be an unordered list, and i delete the list elements, when theyre resolved.
+
+
 
 /* This section is concerned with doing validating the username,and providing real time update*/
 
@@ -180,11 +184,30 @@ let deleteUser = () => {
 
 
 
-let LoadTaskLists =  (resParams) =>{
-  
-  resParams.forEach(element => {
+let LoadTaskLists = (resParams) =>{
+  let tlWrapper   = document.getElementById("TLwrapper");
+  let tlContainer = document.getElementById("TLcontainer");
+
+  resParams.forEach((element,i) => {
+    let{_id,tasks} = element;
+    let x = tlContainer.cloneNode('deep');   
     
+    Tasks[i] = tasks;
+    x.id = "";
+    x.classList.add("TLcontainer");
+    x.style.display="block";
+    x.setAttribute("num",i);
+    x.setAttribute("_id",_id);
+    console.log(i);
+    tlWrapper.appendChild(x);
   });   
+  
+}
+
+
+
+let deleteTaskList = (tl_id) =>{
+
 }
 
 /**                                                    Task Related Functions                                   */
