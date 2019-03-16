@@ -62,6 +62,7 @@ router.post('/Login', async (req,res,next)=>{
   else if(LoginStatus == false)
       entryStatus  = {isValid:false,msg:"Invalid Credentials. Sure u got an account with us fam?"};
 
+  
   entryStatus.user = LoginStatus;
   res.send(entryStatus);
 });
@@ -74,6 +75,7 @@ router.delete('/delUser/:_id', async (req,res,next)=>{
     res.send("User doesn't exist");
     return;
   }
+  
   else if(deletedUser === null)
     res.send("User Deleted !");
 });

@@ -30,17 +30,20 @@ class TaskListDao {
   async getTaskListById(_id){
     console.log(_id);
     let taskList = TaskList.findById({"_id":_id});
+    console.log(taskList); //should be a query;
     return taskList;
   }
 
   async deleteTL(_id){
-    let taskList = await this.getTaskListById(_id);
-    console.log("This is: "+taskList);
-    
     let deletedTaskList = await TaskList.findOneAndDelete({"_id":_id}).exec();
-    console.log("le task is" + deletedTaskList);
-    return deletedTaskList.tasks;
+
+    console.log("This is: "+taskList);
+    if(!deletedTaskList)
+      return false;
+    return true;
   }
+
+  
   
 }
 

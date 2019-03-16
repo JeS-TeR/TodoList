@@ -33,6 +33,13 @@ class TaskDao {
     return deletedTask;
   }
 
+  async deleteAllTasks(tl_id){
+    console.log("this the tl_id"+tl_id)
+   let allDeleted = await Task.deleteMany({"taskListId":tl_id}).exec();
+   console.log(allDeleted);
+   return allDeleted;
+  }
+
 }
 
 module.exports.TaskDao = TaskDao;

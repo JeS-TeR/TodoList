@@ -10,7 +10,6 @@ class TaskListService extends TaskService {
     }
 
     async createTaskList(tlName,userId){
-      
       let taskList = await this.taskListDao.createTL(tlName,userId);
       if(!taskList)
         return false;
@@ -24,20 +23,14 @@ class TaskListService extends TaskService {
     }
     async delTaskList({_id}){
       let taskList = await this.getTaskList({_id});
-      
-      if(!taskList)
-        return false;
-
-      let deletedTasks = await this.taskListDao.deleteTL(_id);
-      console.log("length: "+deletedTasks.length);
-      for(let i = 0; i < deletedTasks.length; i++){
-        let _id = deletedTasks[i]._id;
-        console.log("we in for:" + _id);
-        await this.taskDao.deleteTask(_id);
-      }
+      if(!taskList)return false;
+      let tasksDeleted = await this.taskDao.deleteAllTasks(_id);
+      if(!tasksDeleted)return false
+      taskList = await this.taskListDao.delTL("_id");
       return true;
     }
-    async getTasks({_id}){
+
+    async getAllTasks({_id}){
       let taskList = await this.getTaskList({_id});
       return taskList.tasks;
     }

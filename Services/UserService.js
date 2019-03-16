@@ -7,22 +7,23 @@ class UserService {
   }
 
 async getUserbyId({_id}){
-  let user = {}
     try{
-     user = await this.userDao.getUserbyId(_id);
-  }catch(e){console.log(e); return false;}
+     let user = await this.userDao.getUserbyId(_id);
+     if(!user)
+     return false;
+     console.log(user);
+     return user;
+    }catch(e){console.log(e); return false;}
 
-  if(!user)
-    return false;
-  return user;
+  
 }
 
 async login({username,password}){
   let user = await this.userDao.getUser(username);
   console.log("login" + user);
-  if(user === null)
+  if(!user)
     return null;
-  
+
   else if(user.password !== password)
     return false;
 

@@ -24,12 +24,18 @@ class UserDao{
     return user;
   }
   async getUser(username){
-    let user = User.findOne({username:username},"username password",(err,result)=>{
-      if(err)
-        return false;
-      console.log(result);
-      return result;
-    });
+    let user = User.findOne({username:username});
+
+    user.
+    populate({
+      select:"_id taskListName createdAt",
+      path:'taskList',
+      populate:{
+        select:"-__V -_updatedAt",
+        "path":"tasks"
+      }
+    }).exec();
+    console.log(user);
     return user;
   }
 
