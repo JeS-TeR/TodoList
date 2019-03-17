@@ -13,7 +13,7 @@ block content
               h1.TLname TaskName
             footer.TLfooter
               li
-                nextdue overdue: 
+                span overdue: 
                 span.due 10
               li.upcomingTasks 
                 span upcoming:
@@ -22,6 +22,19 @@ block content
                 span taskCount:
                 span.taskCount 20        
       div#TasksContainer
+        section.taskSec
+          header.taskHead
+            img.exit
+            h1.TLname
+            li
+              span createdOn:
+              span.createdOn 2/2/2
+            li
+              span Due In: 20
+              span.dueIn 20
+            section.taskContent
+              textarea
+            footer.taskFoot  
       form#Log_In_Form
         div
           label Username:

@@ -76,7 +76,7 @@ function comparePass(self){
   };
 }
 
-/*                                                   User Releate functiono                               */
+/*                                                   User Releate functions                               */
 /*                                                   User Releate functions                               */
 /*                                                   User Releate functions                               */
 /*                                                   User Releate functions                               */
@@ -112,11 +112,14 @@ let Submit = async (self) => {
 let LogEmIn = async (resParams) => {
   //Refactor all recurring css styling to a stylesheet; and just toggle between classes; -_- this is too tedius
 
+  let {user}     = resParams;
+ 
+  //DOM DECLERATIONS
   let loginForm  = document.getElementById('Log_In_Form');
   let O_Cont     = document.getElementById('O_Cont');
   let loginTitle = document.getElementById("title");
-  let {user}     = resParams;
-
+ 
+  //DOM MANIPULATION
   document.getElementsByTagName("body")[0].style.backgroundColor="rgba(154, 12, 255, 0.1)";
   loginTitle.style.display = "none";
   loginForm.style.display = "none";
@@ -202,27 +205,34 @@ let populateTL = (resParams) =>{
   tlWrapper.style.display = "block";
   let contHeight          = tlWrapper.clientHeight;
   let TL = [];
-  console.log(contHeight);
-  console.log(resParams);
   resParams.forEach((element,i) => {
     let{_id,tasks,taskListName} = element;
     let x = tlContainer.cloneNode('deep');  
     let taskCount = tasks.length; 
-    // if(i > 6)
-    //   return;
+    
+    //Implement way of limiting tasks, set count and then reload task each time.... modulate this function...Repeating myself;
+    
     if(i==0)
       x.style.marginTop="0px";
     
-    Tasks[i] = tasks;
+    Tasks[i] = tasks; //global
+    
     x.querySelector(".taskCount").innerHTML = taskCount;
     x.querySelector(".TLname").innerHTML = taskListName;
-   
+    
+    //Create func for this 
     x.id = ""+_id;
     x.classList.add("TLcontainer");
     x.setAttribute("num",i);
     x.style.display  = "block";
     x.style.position = "relative";
     x.style.top      = contHeight+"px";
+
+    
+    args = dateHandler(tasks);
+    
+    x.querySelector(".due").innerHTML = args[0];
+    x.querySelector(".upcoming").innerHTML = args[1];
     tlWrapper.appendChild(x);
     TL.push(x);
   });   
@@ -236,9 +246,7 @@ let animateTL = (TL) => {
 
   TL.forEach((element,i) => {
     setTimeout(changePosition.bind(element), 1000*(i/TL.length),element);
-  });
-  
-  
+  }); 
 }
 
  
@@ -259,3 +267,28 @@ let getTasks = async() => {
 
 }
 
+//Adds attributes to class dictionary and returns it to laod tasklist;
+let dateHandler = (tasks) => {
+  let duevariable = 86400;
+  let overDue     = 0;
+  let upcoming    = 0;
+  let today = new Date();
+  
+  tasks.forEach((task,i)=>{
+    let taskDate = new Date(task.dueDate);
+    let numDays  = (taskDate - today)/1000;
+    
+    if(numDays < 0)
+      overDue++
+
+    else if( numDays > 0 && numDays <= duevariable)
+      upcoming++
+    
+    console.log(this);
+    tasks[i].dueDate = numDays;
+    console.log(tasks[i]);
+      
+  },tasks)
+  let args = [overDue,upcoming];
+  return args;
+}

@@ -13,9 +13,9 @@ class TaskService {
     if(!TL)
       return;
     let newTask = await this.taskDao.createTask(taskName,content,dueDate,TL_id,tags);
-
+    if(!newTask)
+      return false
     await this.TLservice.addTask(TL_id,newTask);
-    
     return newTask;
   }
 

@@ -6,8 +6,14 @@ class TaskDao {
   // to create a task i must have access to the the variables that the task schema/model takes, I would
   // get these from the service, and the service would get these through the request(or somewhere between the request and the service;
   async createTask(taskName,content,dueDate,TL_id,tags){
-    let newTask = Task({"taskName":taskName,"content":content,"dueDate":dueDate,"taskListId":TL_id,"tags":tags});
-    newTask.save();
+    let newTask = await Task({"taskName":taskName,"content":content,"dueDate":dueDate,"taskListId":TL_id,"tags":tags});
+    try{
+      await newTask.save();
+    }catch(err){
+      console.log(err);
+      return false;
+    }
+    
     return newTask;
   }
 

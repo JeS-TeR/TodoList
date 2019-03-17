@@ -86,13 +86,12 @@ router.delete('/delUser/:_id', async (req,res,next)=>{
 /*          Routing for tasks                            */
 router.post("/createTask", async (req,res,next) => {
   let {taskName,content,dueDate,tags,TL_id} = req.body;
-  console.log({taskName},{TL_id})
   let newTask = await taskService.createTask({taskName,content,dueDate,tags,TL_id});
   if(!newTask){
-    res.send("task Doesnt Exist");
+    res.send("Bad Request");
     return;
   }
-  console.log(newTask);
+  //console.log(newTask);
   res.send(newTask);
 });
 

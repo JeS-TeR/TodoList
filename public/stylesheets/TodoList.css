@@ -29,7 +29,7 @@ body{
   background-color:#0CE9FF;
   /* border:2px solid black; */
   box-shadow: 5px 5px 5px;
-  height: 160px;
+  height: 120px;
   margin-top:20px;
   transition: all 1s ease-in-out;
   width:100%;
@@ -40,7 +40,7 @@ body{
 .colorBlock{
   background-color:rgba(154, 12, 255, 0.329);
   display:inline-block;
-  height:160px;
+  height:120px;
   vertical-align: top;
   width:5%;
 }
@@ -65,7 +65,7 @@ body{
 }
 
 .TLhead{
-  padding-top:25px;
+  padding-top:10px;
 }
 .del{
   cursor: pointer;
@@ -75,7 +75,7 @@ body{
   right:10px;
 }
 .TLfooter{
-  bottom:0px;
+  /* bottom:0px; */
   display:inline-block;
   left:0px;
   list-style-type: none;

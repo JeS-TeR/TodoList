@@ -7,16 +7,13 @@ class TaskListDao {
     }
 
   async createTL(tlName,userId){
+    let taskList =  TaskList({"taskListName":tlName,"userId":userId});
     try{
-
-      let taskList =  TaskList({"taskListName":tlName,"userId":userId},(err,tasklist) => {    
-         return tasklist;
-       });
-      taskList.save();
-      return taskList;
-    }catch(err){return false;}
+    await taskList.save();
+    }catch(err) {return false};
     
-    
+    console.log(taskList);
+    return taskList;
   }
 
   async addTask(TL_id,task){
