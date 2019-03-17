@@ -4,42 +4,55 @@
  box-sizing: border-box;
 }
 body{
-  /* border:2px solid blue; */
-  height:800px;
+  background-color: #0CE9FF;
+  height:100vh;
+  position:absolute;
+  overflow:hidden;
   width:100vw;
 }
 #O_Cont{
-  border:2px solid black;
+  /* border:2px solid black; */
   /* height:70%; */
   width:70%;
-  margin: 40px auto;
+  margin: 60px auto;
   padding-bottom:20px;
 }
 
 #O_Cont #taskListContainer{
+  
+
   /* border:2px solid purple; */
   display:none;
   width:100%;
 }
 .TLcontainer{
   background-color:#0CE9FF;
+  /* border:2px solid black; */
   box-shadow: 5px 5px 5px;
-  height:100%;
+  height: 160px;
   margin-top:20px;
+  transition: all 1s ease-in-out;
   width:100%;
 }
 #TLcontainer{
   display:none;
 }
 .colorBlock{
-  background-color:#9B0CFF;
+  background-color:rgba(154, 12, 255, 0.329);
   display:inline-block;
-  height:140px;
+  height:160px;
   vertical-align: top;
   width:5%;
 }
 #TLwrapper{
+  background-color:white;
+  box-shadow: 0px 5px 8px 9px rgba(0,0,0,0.75);
+  display:none;
+  padding:30px 30px 50px 30px;
   position:relative;
+  height:90vh;
+  overflow:hidden;
+  top:-60px; /*negative positioning... BAD...change when todl is up and running(learning OP)::::Padding?*/
 }
 
 .TLtemplate{
@@ -50,8 +63,7 @@ body{
   vertical-align: top;
   width:95%;
 }
-.TLhead{
-}
+
 .TLhead{
   padding-top:25px;
 }
@@ -107,7 +119,8 @@ body{
 }
 
 #Log_In_Form{
-  border:2px solid red;
+  background-color:rgba(185, 97, 248, 0.781);
+  /* border:2px solid red; */
   font-size:25px;
   margin:40px auto;
   padding: 30px 10px 20px 10px;
@@ -150,8 +163,8 @@ body{
   display:none;
 }
 #submit{
-  border:2px solid black;
-  /* background-color:red; */
+  /* border:2px solid black; */
+  background-color: #0CE9FF;
   color:black;
   cursor:pointer;
   /* display: inline-block; */
@@ -167,12 +180,14 @@ body{
 }
 
 #Log_In_Form p{
+  background-color:white;
   /* border:2px solid purple; */
   font-size:15px;
   margin-top:5px;
 }
 #newProfile{
-  border:2px solid black;
+  /* border:2px solid black; */
+  background-color: #0CE9FF;
   cursor:pointer;
   font-size: 25px;
   margin:20px auto;

@@ -55,7 +55,6 @@ async deleteUser({_id}){
 async addCollection(userId,taskList){
   console.log("add "+userId);
   let user = await this.userDao.addCollection(userId,taskList);
-  console.log("US.AddCollec" + user);
   return user;
 }
 

@@ -7,6 +7,12 @@
 */
 
 
+/*
+  IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANT IMPORTANTIMPORTANT IMPORTANT IMPORTANT IMPORTANTIMPORTANT 
+
+  Lots of css styling weaved through code, can't be good, Will have to work on transferring it to css classes, and then toggle classes on and off; If i could have
+  a function(one) dedicated to toggling things then that would be amazing...I'm unsure as to how id do that though;
+*/
 
 
 //Globals ------BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD
@@ -105,19 +111,23 @@ let Submit = async (self) => {
 
 let LogEmIn = async (resParams) => {
   //Refactor all recurring css styling to a stylesheet; and just toggle between classes; -_- this is too tedius
+
   let loginForm  = document.getElementById('Log_In_Form');
   let O_Cont     = document.getElementById('O_Cont');
   let loginTitle = document.getElementById("title");
   let {user}     = resParams;
 
+  document.getElementsByTagName("body")[0].style.backgroundColor="rgba(154, 12, 255, 0.1)";
   loginTitle.style.display = "none";
   loginForm.style.display = "none";
   O_Cont.style.border = "none";
-  //!!!!!!!!!!!!! These are global... not good... need to refactor !!!!!!!!!!!!!!!!!!!!!
+
+  //!!!!!!!!!!!!! These are global... not good... need to refactor !!!!!!!!!!!!!!!!!!!!!(Pragmatic Programmer would be disappointed :-/ )
   userId    = user._id;
   userLogin = user.username;
 
-  LoadTaskLists(resParams.user.taskList);
+  let TL = populateTL(resParams.user.taskList);
+  animateTL(TL);
 }
 
 let denyAccess = (msg) => {
@@ -184,25 +194,54 @@ let deleteUser = () => {
 
 
 
-let LoadTaskLists = (resParams) =>{
-  let tlWrapper   = document.getElementById("TLwrapper");
-  let tlContainer = document.getElementById("TLcontainer");
+let populateTL = (resParams) =>{
+  //really need to make a function that handles all the styling... this isnt orthagonal at all(Pragmatic Programmer...would be disappoineted :/)!!!!!!!!!
 
+  let tlWrapper           = document.getElementById("TLwrapper");
+  let tlContainer         = document.getElementById("TLcontainer");
+  tlWrapper.style.display = "block";
+  let contHeight          = tlWrapper.clientHeight;
+  let TL = [];
+  console.log(contHeight);
+  console.log(resParams);
   resParams.forEach((element,i) => {
-    let{_id,tasks} = element;
-    let x = tlContainer.cloneNode('deep');   
+    let{_id,tasks,taskListName} = element;
+    let x = tlContainer.cloneNode('deep');  
+    let taskCount = tasks.length; 
+    // if(i > 6)
+    //   return;
+    if(i==0)
+      x.style.marginTop="0px";
     
     Tasks[i] = tasks;
-    x.id = "";
+    x.querySelector(".taskCount").innerHTML = taskCount;
+    x.querySelector(".TLname").innerHTML = taskListName;
+   
+    x.id = ""+_id;
     x.classList.add("TLcontainer");
-    x.style.display="block";
     x.setAttribute("num",i);
-    x.setAttribute("_id",_id);
-    console.log(i);
+    x.style.display  = "block";
+    x.style.position = "relative";
+    x.style.top      = contHeight+"px";
     tlWrapper.appendChild(x);
+    TL.push(x);
   });   
+  return TL;
+}
+
+let animateTL = (TL) => {
+  function changePosition(element){
+    element.style.top ="0px";
+  }
+
+  TL.forEach((element,i) => {
+    setTimeout(changePosition.bind(element), 1000*(i/TL.length),element);
+  });
+  
   
 }
+
+ 
 
 
 

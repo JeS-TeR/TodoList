@@ -7,14 +7,7 @@ class UserDao{
   constructor(options = {}) {
         this.options = options
     }
-  /**
-  Only focues on the creation of new users, does not care about wether user already exists.
-  This is handled by the corresponding service.
-  The service will get data from the request, specifically the list of arguments sent from client
-  From that the service can perform logic like checking if data exits,validation(if done on serverside)
-  If everything is good, then the service will call the DOA(it takes it as an argument, so itll have a reference)
-  The DOA will then interact with the database.
-  **/
+ 
   async getUserbyId(_id){
     console.log("userDAO"+_id);
     let user = await User.findById({_id:_id},(err,result)=>{
@@ -47,13 +40,7 @@ class UserDao{
   }
 
   async deleteUser(_id){
-    console.log("we in the deleteUser-DAO: " +_id);
-    let deletedUser = User.findOneAndDelete({"_id":_id},(err,result)=>{
-      if(err)
-        return false;
-      return result;
-    });
-    console.log("we ub daoo:use" + deletedUser);
+    let deletedUser = User.findOneAndDelete({"_id":_id});
     return deletedUser;
   }
 
