@@ -6,11 +6,11 @@ block content
       h1#title #{title}
       div#TLwrapper
         div#TLcontainer
-          aside.colorBlock
           div.TLtemplate
             header.TLhead
               img.del(src="images/TLX.png")
               h1.TLname TaskName
+             ection.TaskContainer  
             footer.TLfooter
               li
                 span overdue: 
@@ -21,20 +21,11 @@ block content
               li 
                 span taskCount:
                 span.taskCount 20        
-      div#TasksContainer
-        section.taskSec
-          header.taskHead
-            img.exit
-            h1.TLname
-            li
-              span createdOn:
-              span.createdOn 2/2/2
-            li
-              span Due In: 20
-              span.dueIn 20
-            section.taskContent
-              textarea
-            footer.taskFoot  
+
+      //-Container for taks in tasklist
+      //- div#TasksWrapper
+      //-   div.taskContainer
+      //-     header.TaskHead 
       form#Log_In_Form
         div
           label Username:
@@ -54,7 +45,21 @@ block content
         div#submit(onclick = "Submit(this)" state = "0") Submit
         p#createPara ------(: No Profile : No Worries :)------
         div#newProfile(onclick = "createUser(this)" state ="false") Create
-        
+      section.taskSec
+        header.taskHead
+          img.exit
+          img.edit
+          h1.TLname TaskName
+          footer
+            li
+              span createdOn:
+              span.createdOn 2/2/2
+            li
+              span Due In: 20
+              span.dueIn 20
+        section.taskContent
+          p
+        footer.taskFoot   
     div#taskListContainer
        
   script(src="javascripts/anime.min.js")

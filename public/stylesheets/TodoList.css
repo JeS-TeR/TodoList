@@ -6,8 +6,8 @@
 body{
   background-color: #0CE9FF;
   height:100vh;
-  position:absolute;
-  overflow:hidden;
+  /* position:absolute; */
+  /* overflow:hidden; */
   width:100vw;
 }
 #O_Cont{
@@ -29,18 +29,20 @@ body{
   background-color:#0CE9FF;
   /* border:2px solid black; */
   box-shadow: 5px 5px 5px;
-  height: 120px;
+  /* height: 120px; */
   margin-top:20px;
   transition: all 1s ease-in-out;
-  width:100%;
+  width:90%;
 }
+
 #TLcontainer{
   display:none;
 }
 .colorBlock{
   background-color:rgba(154, 12, 255, 0.329);
+  /* border:2px solid black; */
   display:inline-block;
-  height:120px;
+  height:80px;
   vertical-align: top;
   width:5%;
 }
@@ -51,35 +53,79 @@ body{
   padding:30px 30px 50px 30px;
   position:relative;
   height:90vh;
-  overflow:hidden;
+  overflow-x:hidden;
   top:-60px; /*negative positioning... BAD...change when todl is up and running(learning OP)::::Padding?*/
 }
 
 .TLtemplate{
   /* border:2px solid purple; */
   display:inline-block;
-  height: 140px;
+  /* height: 140px; */
   position:relative;
   vertical-align: top;
   width:95%;
 }
+.taskSec{
+  border:2px solid red;
+  height:60vh;
+  width:100%;
+}
+.taskHead{
+  width:100%;
+}
+.taskHead h1{
+  height:40px;
+  width:100%;
+}
+.taskHead footer{
+  border:2px solid black;
+  width:100%;
+}
+.taskHead footer li{
+  border-top:1px solid black; 
+  display: inline-block;
+  padding-top:10px;
+  padding-bottom:10px;
+  width:50%;
+}
 
+.taskContent{
+  border:2px solid green;
+  height:70%;
+  margin:40px auto;
+  width:70%;
+}
 .TLhead{
+  border-bottom:1px solid black;
+  cursor: pointer;
   padding-top:10px;
 }
 .del{
+  border:2px solid black;
   cursor: pointer;
   height:40px;
   position:absolute;
   top:10px;
   right:10px;
+  z-index:100;
+}
+.TaskContainer{
+  /* border:2px solid black; */
+  /* background-color: #0CE9FF */
+  height:0px;
+  position:relative;
+  transition: height 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  width:100%;
+  z-index:100;
 }
 .TLfooter{
+  border-top:1px solid black; 
+  cursor: none;
   /* bottom:0px; */
   display:inline-block;
   left:0px;
   list-style-type: none;
-  position:absolute;
+  /* position:absolute; */
   width:100%;
 }
 .TLfooter li{
@@ -88,6 +134,7 @@ body{
   margin-left:10px;
   padding-left:5px;
   padding-right:10px;
+  padding-top:10px;
   width:30%;
 }
 .TLfooter li:first-child{
@@ -180,7 +227,6 @@ body{
 }
 
 #Log_In_Form p{
-  background-color:white;
   /* border:2px solid purple; */
   font-size:15px;
   margin-top:5px;

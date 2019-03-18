@@ -14,7 +14,9 @@
   a function(one) dedicated to toggling things then that would be amazing...I'm unsure as to how id do that though;
 */
 
-
+/* TODO
+  Create  A general function that populates elements.... it will take the template object, the array to be populated 
+*/
 //Globals ------BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD
 var userId     = "";
 var userLogin  = "";
@@ -224,10 +226,10 @@ let populateTL = (resParams) =>{
     x.id = ""+_id;
     x.classList.add("TLcontainer");
     x.setAttribute("num",i);
+    x.addEventListener("click",popUpTasks)
     x.style.display  = "block";
     x.style.position = "relative";
     x.style.top      = contHeight+"px";
-
     
     args = dateHandler(tasks);
     
@@ -284,11 +286,26 @@ let dateHandler = (tasks) => {
     else if( numDays > 0 && numDays <= duevariable)
       upcoming++
     
-    console.log(this);
     tasks[i].dueDate = numDays;
-    console.log(tasks[i]);
+    // console.log(tasks[i]);
       
   },tasks)
   let args = [overDue,upcoming];
   return args;
+}
+
+let popUpTasks = (evt) => {
+ let Cont = evt.currentTarget //Figure this out after i get it working
+ console.log(Cont);
+ let taskSec = Cont.querySelector(".TaskContainer");
+ taskSec.style.height="500px";
+ taskSec.style.display="block";
+ let num = Cont.getAttribute("num");
+ populateTasks(num); 
+}
+
+let populateTasks = (num) =>{
+  Tasks[num].forEach(task => {
+    console.log(task);
+  })
 }
